@@ -10,7 +10,7 @@ export default function BannerSection() {
   const [location, setLocation] = useState("");
 
   return (
-    <section className="bg-[#0d0d0d] min-h-[55vh] flex flex-col items-center justify-center text-center px-4 py-20">
+    <section className="w-full flex flex-col items-center justify-center text-center px-4 pt-20 pb-16">
 
       {/* Badge */}
       <div className="inline-flex items-center gap-2 border border-[#2a2a2a] rounded-full px-4 py-1.5 mb-7 bg-[#161616]">
