@@ -47,7 +47,7 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-2">
           <div className="w-px h-6 bg-[#3a3a3a] mr-2" />
           <Link
-            href="/sign-in"
+            href="/signin"
             className="text-violet-400 hover:bg-violet-400/10 text-[15px] font-medium px-4 py-2 rounded-lg transition-colors"
           >
             Sign In
@@ -85,7 +85,7 @@ export default function Navbar() {
           ))}
           <div className="w-full h-px bg-[#2a2a2a]" />
           <Link
-            href="/sign-in"
+            href="/signin"
             className="text-violet-400 text-[15px] font-medium"
             onClick={() => setMenuOpen(false)}
           >
