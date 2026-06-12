@@ -5,14 +5,27 @@ import { Bars, Xmark } from "@gravity-ui/icons";
 import Image from "next/image";
 import Link from "next/link";
 
+
+import { useSession, signOut } from "@/lib/auth-client";
+
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  
+  const { data: session } = useSession();
+  const user = session?.user;
 
   const navLinks = [
     { label: "Browse Jobs", href: "/jobs" },
     { label: "Company", href: "/companies" },
     { label: "Pricing", href: "/pricing" },
   ];
+
+  
+  const handleLogout = async () => {
+    await signOut();
+    setMenuOpen(false);
+  };
 
   return (
     <header className="px-4 pt-3">
@@ -46,18 +59,38 @@ export default function Navbar() {
         {/* Desktop Auth Buttons */}
         <div className="hidden md:flex items-center gap-2">
           <div className="w-px h-6 bg-[#3a3a3a] mr-2" />
-          <Link
-            href="/signin"
-            className="text-violet-400 hover:bg-violet-400/10 text-[15px] font-medium px-4 py-2 rounded-lg transition-colors"
-          >
-            Sign In
-          </Link>
-          <Link
-            href="/sign-up"
-            className="bg-[#7c3aed] hover:bg-[#6d28d9] text-white text-[15px] font-medium px-5 py-2.5 rounded-xl transition-colors"
-          >
-            Get Started
-          </Link>
+
+          
+          {user ? (
+            
+            <>
+              <span className="text-gray-300 text-[15px] font-medium px-2">
+                Hello, {user.name}
+              </span>
+              <button
+                onClick={handleLogout}
+                className="bg-[#7c3aed] hover:bg-[#6d28d9] text-white text-[15px] font-medium px-5 py-2.5 rounded-xl transition-colors"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            
+            <>
+              <Link
+                href="/signin"
+                className="text-violet-400 hover:bg-violet-400/10 text-[15px] font-medium px-4 py-2 rounded-lg transition-colors"
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/signup"
+                className="bg-[#7c3aed] hover:bg-[#6d28d9] text-white text-[15px] font-medium px-5 py-2.5 rounded-xl transition-colors"
+              >
+                Get Started
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Mobile Hamburger */}
@@ -84,20 +117,40 @@ export default function Navbar() {
             </Link>
           ))}
           <div className="w-full h-px bg-[#2a2a2a]" />
-          <Link
-            href="/signin"
-            className="text-violet-400 text-[15px] font-medium"
-            onClick={() => setMenuOpen(false)}
-          >
-            Sign In
-          </Link>
-          <Link
-            href="/sign-up"
-            className="bg-[#7c3aed] hover:bg-[#6d28d9] text-white text-[15px] font-medium px-5 py-2.5 rounded-xl transition-colors text-center"
-            onClick={() => setMenuOpen(false)}
-          >
-            Get Started
-          </Link>
+
+          {/* ✅ CHANGED: Mobile conditional rendering — logged in vs logged out */}
+          {user ? (
+            // ✅ CHANGED: Mobile logged in state — show user name + logout button
+            <>
+              <span className="text-gray-300 text-[15px] font-medium">
+                {user.name}
+              </span>
+              <button
+                onClick={handleLogout}
+                className="bg-[#7c3aed] hover:bg-[#6d28d9] text-white text-[15px] font-medium px-5 py-2.5 rounded-xl transition-colors text-center"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            // ✅ CHANGED: Mobile logged out state — show Sign In + Get Started (your original links)
+            <>
+              <Link
+                href="/signin"
+                className="text-violet-400 text-[15px] font-medium"
+                onClick={() => setMenuOpen(false)}
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/sign-up"
+                className="bg-[#7c3aed] hover:bg-[#6d28d9] text-white text-[15px] font-medium px-5 py-2.5 rounded-xl transition-colors text-center"
+                onClick={() => setMenuOpen(false)}
+              >
+                Get Started
+              </Link>
+            </>
+          )}
         </div>
       )}
     </header>

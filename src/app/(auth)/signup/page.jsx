@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Form, TextField, Label, Input, FieldError, Button } from "@heroui/react";
+import { Description, Radio, RadioGroup } from "@heroui/react";
 import { Person, At, Lock, Eye, EyeSlash } from "@gravity-ui/icons";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -24,19 +25,21 @@ function GoogleIcon() {
 export default function SignUp() {
     const router = useRouter();
     const [showPass, setShowPass] = useState(false);
+    const [role, setRole] = useState("seeker")
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = Object.fromEntries(new FormData(e.currentTarget));
 
-        const {name, email, password} = formData;
+        const { name, email, password } = formData;
 
-        
+        console.log(role)
 
         const { data, error } = await authClient.signUp.email({
             name,
             email,
-            password
+            password,
+            role,
 
         });
 
@@ -164,6 +167,30 @@ export default function SignUp() {
                                 </div>
                                 <FieldError className="text-xs text-red-400 mt-0.5" />
                             </TextField>
+                            <div className="flex flex-col gap-4">
+                                <RadioGroup defaultValue="seeker" name="role" onChange={value => { setRole(value) }} orientation="horizontal">
+                                    <Radio value="seeker">
+                                        <Radio.Control>
+                                            <Radio.Indicator />
+                                        </Radio.Control>
+                                        <Radio.Content>
+                                            <Label className="text-gray-200">Job Seeker</Label>
+
+                                        </Radio.Content>
+                                    </Radio>
+                                    <Radio value="recruiter">
+                                        <Radio.Control>
+                                            <Radio.Indicator />
+                                        </Radio.Control>
+                                        <Radio.Content>
+                                            <Label className="text-gray-200">Recruiter</Label>
+
+                                        </Radio.Content>
+                                    </Radio>
+
+                                </RadioGroup>
+                            </div>
+
 
                             {/* Submit */}
                             <Button
