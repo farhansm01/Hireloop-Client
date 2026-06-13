@@ -1,4 +1,4 @@
-import { DashboardSidebar } from '@/components/Dashboard/DashboardSidebar';
+import  DashboardSidebar  from '@/components/Dashboard/DashboardSidebar';
 import React from 'react';
 
 export default function DashboardLayout({ children }) {

@@ -32,17 +32,7 @@ const RecruiterJobs = async () => {
                     <h1 className="text-white text-2xl sm:text-3xl font-bold mb-1">Manage Jobs</h1>
                     <p className="text-gray-500 text-sm">View and manage all your job postings.</p>
                 </div>
-                <Link
-                    href={atLimit ? '#' : '/dashboard/recruiter/jobs/new'}
-                    className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all
-                        ${atLimit
-                            ? 'bg-[#1f1f1f] text-gray-600 border border-[#2a2a2a] cursor-not-allowed pointer-events-none'
-                            : 'bg-[#7c3aed] hover:bg-[#6d28d9] text-white shadow-md shadow-violet-900/40'
-                        }`}
-                >
-                    <Plus width={16} height={16} />
-                    Post New Job
-                </Link>
+                
             </div>
 
             {/* Plan Usage */}
